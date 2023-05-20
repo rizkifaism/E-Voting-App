@@ -37,6 +37,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         LogoutBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,6 +54,7 @@ public class Menu extends javax.swing.JFrame {
         PictCdt.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
         PictCdt.setForeground(new java.awt.Color(0, 0, 255));
         PictCdt.setIcon(new javax.swing.ImageIcon("E:\\img skripsi\\candidates (1).png")); // NOI18N
+        PictCdt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PictCdt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PictCdtMouseClicked(evt);
@@ -63,6 +65,7 @@ public class Menu extends javax.swing.JFrame {
         PictVoters.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
         PictVoters.setForeground(new java.awt.Color(0, 0, 255));
         PictVoters.setIcon(new javax.swing.ImageIcon("E:\\img skripsi\\consensus (2).png")); // NOI18N
+        PictVoters.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PictVoters.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PictVotersMouseClicked(evt);
@@ -73,6 +76,7 @@ public class Menu extends javax.swing.JFrame {
         PictVote.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
         PictVote.setForeground(new java.awt.Color(0, 0, 255));
         PictVote.setIcon(new javax.swing.ImageIcon("E:\\img skripsi\\ballot (1).png")); // NOI18N
+        PictVote.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PictVote.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PictVoteMouseClicked(evt);
@@ -83,6 +87,7 @@ public class Menu extends javax.swing.JFrame {
         PictRslt.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
         PictRslt.setForeground(new java.awt.Color(0, 0, 255));
         PictRslt.setIcon(new javax.swing.ImageIcon("E:\\img skripsi\\polling (2).png")); // NOI18N
+        PictRslt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PictRslt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PictRsltMouseClicked(evt);
@@ -111,20 +116,33 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 255));
 
+        jLabel7.setBackground(new java.awt.Color(0, 0, 255));
+        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 10)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("SMK 3 Perguruan Cikini © 2023");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(225, 225, 225))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         LogoutBtn.setFont(new java.awt.Font("Leelawadee UI", 2, 16)); // NOI18N
         LogoutBtn.setForeground(new java.awt.Color(255, 255, 255));
         LogoutBtn.setIcon(new javax.swing.ImageIcon("E:\\img skripsi\\logout (3).png")); // NOI18N
+        LogoutBtn.setBorder(null);
+        LogoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LogoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LogoutBtnMouseClicked(evt);
@@ -163,19 +181,19 @@ public class Menu extends javax.swing.JFrame {
                                 .addGap(42, 42, 42)
                                 .addComponent(PictRslt)))
                         .addGap(30, 30, 30))))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(151, 151, 151))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
-                .addGap(53, 53, 53)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PictCdt, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PictVoters, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(PictVote, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,7 +204,7 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -285,6 +303,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

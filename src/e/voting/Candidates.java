@@ -74,7 +74,7 @@ public class Candidates extends javax.swing.JFrame {
         try {
             Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
             St = Con.createStatement();
-            Rs = St.executeQuery("SELECT * FROM tb_candidates ORDER BY No");
+            Rs = St.executeQuery("SELECT No, ID, Name, Age, Gender, Vote, Vision, Mission, Photo FROM tb_candidates ORDER BY No");
             CdtTable.setModel(DbUtils.resultSetToTableModel(Rs));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e);
@@ -102,8 +102,6 @@ public class Candidates extends javax.swing.JFrame {
         column.setPreferredWidth(150);
         column = CdtTable.getColumnModel().getColumn(8);
         column.setPreferredWidth(150);
-        column = CdtTable.getColumnModel().getColumn(9);
-        column.setPreferredWidth(50);
     }
     
     public Candidates() {
@@ -275,6 +273,7 @@ public class Candidates extends javax.swing.JFrame {
         AddBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         AddBtn.setForeground(new java.awt.Color(255, 255, 255));
         AddBtn.setText("Add");
+        AddBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddBtnMouseClicked(evt);
@@ -290,6 +289,7 @@ public class Candidates extends javax.swing.JFrame {
         EditBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         EditBtn.setForeground(new java.awt.Color(255, 255, 255));
         EditBtn.setText("Edit");
+        EditBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         EditBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditBtnMouseClicked(evt);
@@ -305,6 +305,7 @@ public class Candidates extends javax.swing.JFrame {
         DeleteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
         DeleteBtn.setText("Delete");
+        DeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnMouseClicked(evt);
@@ -319,6 +320,7 @@ public class Candidates extends javax.swing.JFrame {
         BackBtn.setFont(new java.awt.Font("Leelawadee UI", 2, 16)); // NOI18N
         BackBtn.setForeground(new java.awt.Color(255, 255, 255));
         BackBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\rizki\\Pictures\\image project skripsi\\left-arrow (3).png")); // NOI18N
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackBtnMouseClicked(evt);
@@ -640,6 +642,7 @@ public class Candidates extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)CdtTable.getModel();
         int MyIndex = CdtTable.getSelectedRow();
+        CId = Integer.valueOf(model.getValueAt(MyIndex, 0).toString());
         CdtID.setText(model.getValueAt(MyIndex, 1).toString());
         CdtName.setText(model.getValueAt(MyIndex, 2).toString());
         CdtAge.setText(model.getValueAt(MyIndex, 3).toString());
@@ -679,7 +682,7 @@ public class Candidates extends javax.swing.JFrame {
                 try {
                     InputStream img = new FileInputStream(imgpath);
                     Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
-                    String Query = "UPDATE tb_candidates SET ID = ?, Name = ?, Age = ?, Gender = ?, Vote = ?, Vision = ?, Mission = ?, Photo = ? WHERE No = " + CId + " OR Name = '" + CdtName.getText() + "' OR Age = " + CdtAge.getText() + " OR Gender = '" + CdtGen.getSelectedItem() + "' OR Vote = '" + CdtVote.getSelectedItem() + "'";
+                    String Query = "UPDATE tb_candidates SET ID = ?, Name = ?, Age = ?, Gender = ?, Vote = ?, Vision = ?, Mission = ?, Photo = ? WHERE No = " + CId;
                     PreparedStatement Update = Con.prepareStatement(Query);
                     Update.setString(1, CdtID.getText());
                     Update.setString(2, CdtName.getText());
@@ -694,7 +697,7 @@ public class Candidates extends javax.swing.JFrame {
                     DisplayCandidates();  
                     WidthColumn();
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, "Candidate Update Failed");
                 }
             } catch (HeadlessException | FileNotFoundException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, e);

@@ -238,6 +238,7 @@ public class Voting extends javax.swing.JFrame {
         BackBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         BackBtn.setForeground(new java.awt.Color(255, 255, 255));
         BackBtn.setText("Logout");
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackBtnMouseClicked(evt);
@@ -263,6 +264,7 @@ public class Voting extends javax.swing.JFrame {
         VoteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 24)); // NOI18N
         VoteBtn.setForeground(new java.awt.Color(255, 255, 255));
         VoteBtn.setText("Vote");
+        VoteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         VoteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 VoteBtnMouseClicked(evt);
@@ -573,7 +575,6 @@ public class Voting extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
@@ -581,7 +582,6 @@ public class Voting extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;

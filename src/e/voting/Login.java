@@ -97,11 +97,16 @@ public class Login extends javax.swing.JFrame {
         LoginBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         LoginBtn.setForeground(new java.awt.Color(0, 0, 255));
         LoginBtn.setText("Login");
+        LoginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LoginBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LoginBtnMouseClicked(evt);
             }
         });
+
+        Uname.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+
+        Password.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

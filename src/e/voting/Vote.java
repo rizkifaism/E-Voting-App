@@ -239,6 +239,7 @@ public class Vote extends javax.swing.JFrame {
         AddBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         AddBtn.setForeground(new java.awt.Color(255, 255, 255));
         AddBtn.setText("Add");
+        AddBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddBtnMouseClicked(evt);
@@ -254,6 +255,7 @@ public class Vote extends javax.swing.JFrame {
         EditBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         EditBtn.setForeground(new java.awt.Color(255, 255, 255));
         EditBtn.setText("Edit");
+        EditBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         EditBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditBtnMouseClicked(evt);
@@ -269,6 +271,7 @@ public class Vote extends javax.swing.JFrame {
         DeleteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
         DeleteBtn.setText("Delete");
+        DeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnMouseClicked(evt);
@@ -283,6 +286,7 @@ public class Vote extends javax.swing.JFrame {
         BackBtn.setFont(new java.awt.Font("Leelawadee UI", 2, 16)); // NOI18N
         BackBtn.setForeground(new java.awt.Color(0, 0, 255));
         BackBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\rizki\\Pictures\\image project skripsi\\left-arrow (3).png")); // NOI18N
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackBtnMouseClicked(evt);
@@ -308,7 +312,7 @@ public class Vote extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1045, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

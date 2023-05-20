@@ -261,6 +261,7 @@ public class Voters extends javax.swing.JFrame {
         AddBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         AddBtn.setForeground(new java.awt.Color(255, 255, 255));
         AddBtn.setText("Add");
+        AddBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddBtnMouseClicked(evt);
@@ -276,6 +277,7 @@ public class Voters extends javax.swing.JFrame {
         EditBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         EditBtn.setForeground(new java.awt.Color(255, 255, 255));
         EditBtn.setText("Edit");
+        EditBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         EditBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EditBtnMouseClicked(evt);
@@ -291,6 +293,7 @@ public class Voters extends javax.swing.JFrame {
         DeleteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         DeleteBtn.setForeground(new java.awt.Color(255, 255, 255));
         DeleteBtn.setText("Delete");
+        DeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnMouseClicked(evt);
@@ -305,6 +308,7 @@ public class Voters extends javax.swing.JFrame {
         BackBtn.setFont(new java.awt.Font("Leelawadee UI", 2, 16)); // NOI18N
         BackBtn.setForeground(new java.awt.Color(0, 0, 255));
         BackBtn.setIcon(new javax.swing.ImageIcon("C:\\Users\\rizki\\Pictures\\image project skripsi\\left-arrow (3).png")); // NOI18N
+        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BackBtnMouseClicked(evt);
@@ -369,6 +373,7 @@ public class Voters extends javax.swing.JFrame {
         DeleteBtnAll.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
         DeleteBtnAll.setForeground(new java.awt.Color(255, 255, 255));
         DeleteBtnAll.setText("Delete All");
+        DeleteBtnAll.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteBtnAll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnAllMouseClicked(evt);
@@ -382,16 +387,16 @@ public class Voters extends javax.swing.JFrame {
 
         VtrClassSrc.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
         VtrClassSrc.setForeground(new java.awt.Color(0, 102, 255));
-        VtrClassSrc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Class", "X", "XI", "XII" }));
-        VtrClassSrc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                VtrClassSrcMouseClicked(evt);
+        VtrClassSrc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Class--", "X", "XI", "XII" }));
+        VtrClassSrc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VtrClassSrcActionPerformed(evt);
             }
         });
 
         VtrMajorSrc.setFont(new java.awt.Font("Leelawadee UI", 0, 14)); // NOI18N
         VtrMajorSrc.setForeground(new java.awt.Color(0, 102, 255));
-        VtrMajorSrc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Major", "TKJ", "MM", "Farmasi", "OTKP", "TKRO" }));
+        VtrMajorSrc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Major--", "TKJ", "MM", "Farmasi", "OTKP", "TKRO" }));
         VtrMajorSrc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VtrMajorSrcActionPerformed(evt);
@@ -710,8 +715,14 @@ public class Voters extends javax.swing.JFrame {
             WidthColumn();
         }
     }//GEN-LAST:event_VtrSearchKeyReleased
+    
+    private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
+        // TODO add your handling code here:
+        new Menu().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackBtnMouseClicked
 
-    private void FindDataClass() {
+    private void FindDataClass(String Key) {
         DefaultTableModel TableFind = new DefaultTableModel();
         TableFind.addColumn("No");
         TableFind.addColumn("Name");
@@ -724,7 +735,7 @@ public class Voters extends javax.swing.JFrame {
         try {
             Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
             Statement st = Con.createStatement();
-            ResultSet Find = st.executeQuery("SELECT * FROM tb_voters WHERE Class = '" + VtrClass.getSelectedItem().toString() + "'");
+            ResultSet Find = st.executeQuery("SELECT * FROM tb_voters WHERE Class = '" + Key + "'");
             while (Find.next()) {
                 TableFind.addRow(new Object[] {
                     Find.getString(1),
@@ -744,30 +755,71 @@ public class Voters extends javax.swing.JFrame {
         }
     }
     
-    private void VtrClassSrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VtrClassSrcMouseClicked
+    private void VtrClassSrcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VtrClassSrcActionPerformed
         // TODO add your handling code here:
-        if(VtrClassSrc.getSelectedItem() == "X") {
-            FindDataClass();
+        if(VtrClassSrc.getSelectedItem()== "X") {
+            FindDataClass("X");
         } else if(VtrClassSrc.getSelectedItem() == "XI") {
-            FindDataClass();
+            FindDataClass("XI");
         } else if(VtrClassSrc.getSelectedItem() == "XII") {
-            FindDataClass();
+            FindDataClass("XII");
         } else {
             DisplayVoters();
             WidthColumn();
         }
-    }//GEN-LAST:event_VtrClassSrcMouseClicked
+    }//GEN-LAST:event_VtrClassSrcActionPerformed
 
-    private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
-        // TODO add your handling code here:
-        new Menu().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BackBtnMouseClicked
-
+    private void FindDataMajor(String Key) {
+        DefaultTableModel TableFind = new DefaultTableModel();
+        TableFind.addColumn("No");
+        TableFind.addColumn("Name");
+        TableFind.addColumn("Age");
+        TableFind.addColumn("Password");
+        TableFind.addColumn("Gender");
+        TableFind.addColumn("Class");
+        TableFind.addColumn("Major");
+        TableFind.addColumn("Vote");
+        try {
+            Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
+            Statement st = Con.createStatement();
+            ResultSet Find = st.executeQuery("SELECT * FROM tb_voters WHERE Major = '" + Key + "'");
+            while (Find.next()) {
+                TableFind.addRow(new Object[] {
+                    Find.getString(1),
+                    Find.getString(2),
+                    Find.getString(3),
+                    Find.getString(4),
+                    Find.getString(5),
+                    Find.getString(6),
+                    Find.getString(7),
+                    Find.getString(8),
+                });
+            }
+            VtrTable.setModel(TableFind);
+            WidthColumn();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
+    }
+    
     private void VtrMajorSrcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VtrMajorSrcActionPerformed
         // TODO add your handling code here:
+        if(VtrMajorSrc.getSelectedItem()== "TKJ") {
+            FindDataMajor("TKJ");
+        } else if(VtrMajorSrc.getSelectedItem() == "MM") {
+            FindDataMajor("MM");
+        } else if(VtrMajorSrc.getSelectedItem() == "Farmasi") {
+            FindDataMajor("Farmasi");
+        } else if(VtrMajorSrc.getSelectedItem() == "OTKP") {
+            FindDataMajor("OTKP");
+        } else if(VtrMajorSrc.getSelectedItem() == "TKRO") {
+            FindDataMajor("TKRO");
+        } else {
+            DisplayVoters();
+            WidthColumn();
+        }
     }//GEN-LAST:event_VtrMajorSrcActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -824,7 +876,6 @@ public class Voters extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -836,7 +887,6 @@ public class Voters extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
