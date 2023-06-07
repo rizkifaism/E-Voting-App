@@ -25,7 +25,7 @@ import net.proteanit.sql.DbUtils;
 public class Voting extends javax.swing.JFrame {
 
     /**
-     * Creates new form Voting
+     * Creates new form MainVoting
      */
     Connection Con = null;
     PreparedStatement pst = null;
@@ -36,7 +36,7 @@ public class Voting extends javax.swing.JFrame {
         try {
             Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
             St = Con.createStatement();
-            Rs = St.executeQuery("SELECT No, ID, Name, Age, Gender, Vote, Vision, Mission, Photo FROM tb_candidates ORDER BY No");
+            Rs = St.executeQuery("SELECT * FROM tb_candidates ORDER BY No");
             CdtTable.setModel(DbUtils.resultSetToTableModel(Rs));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e);
@@ -53,6 +53,21 @@ public class Voting extends javax.swing.JFrame {
             Rs1 = St1.executeQuery("SELECT MAx(No) from tb_candidates");
             Rs1.next();
             CId = Rs1.getInt(1)+1;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }
+    
+    int VId;
+    Statement St2 = null;
+    ResultSet Rs2 = null;
+    
+    private void VCount() {
+        try {
+            St2 = Con.createStatement();
+            Rs2 = St2.executeQuery("SELECT MAx(Votes) from tb_votes");
+            Rs2.next();
+            VId = Rs2.getInt(1)+1;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -81,21 +96,10 @@ public class Voting extends javax.swing.JFrame {
         column.setPreferredWidth(200);
     }
     
-    int votingId;
-    
-    public Voting(int VoterId) {
-        initComponents();
-        DisplayCandidates();
-        WidthColumn();
-        BravoLbl.setVisible(false);
-        votingId = VoterId;
-    }
-    
     public Voting() {
         initComponents();
         DisplayCandidates();
         WidthColumn();
-        BravoLbl.setVisible(false);
     }
 
     /**
@@ -117,7 +121,7 @@ public class Voting extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         CdtTable = new javax.swing.JTable();
-        BackBtn = new javax.swing.JButton();
+        LogoutBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         CdtPict = new javax.swing.JLabel();
@@ -125,10 +129,19 @@ public class Voting extends javax.swing.JFrame {
         CdtName = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        CdtVisi = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         CdtMisi = new javax.swing.JTextArea();
-        BravoLbl = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Ldr = new javax.swing.JComboBox<>();
+        Dcp = new javax.swing.JComboBox<>();
+        Cmc = new javax.swing.JComboBox<>();
+        Rsp = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        CdtVisi = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -234,14 +247,14 @@ public class Voting extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(CdtTable);
 
-        BackBtn.setBackground(new java.awt.Color(0, 0, 255));
-        BackBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
-        BackBtn.setForeground(new java.awt.Color(255, 255, 255));
-        BackBtn.setText("Logout");
-        BackBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        BackBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        LogoutBtn.setBackground(new java.awt.Color(0, 0, 255));
+        LogoutBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        LogoutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        LogoutBtn.setText("Logout");
+        LogoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LogoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BackBtnMouseClicked(evt);
+                LogoutBtnMouseClicked(evt);
             }
         });
 
@@ -264,6 +277,7 @@ public class Voting extends javax.swing.JFrame {
         VoteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 24)); // NOI18N
         VoteBtn.setForeground(new java.awt.Color(255, 255, 255));
         VoteBtn.setText("Vote");
+        VoteBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         VoteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         VoteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -286,10 +300,6 @@ public class Voting extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 0, 255));
         jLabel12.setText("Mission");
 
-        CdtVisi.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
-        CdtVisi.setForeground(new java.awt.Color(0, 0, 255));
-        CdtVisi.setText("Vision Candidate");
-
         CdtMisi.setEditable(false);
         CdtMisi.setColumns(20);
         CdtMisi.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
@@ -297,10 +307,53 @@ public class Voting extends javax.swing.JFrame {
         CdtMisi.setRows(5);
         jScrollPane2.setViewportView(CdtMisi);
 
-        BravoLbl.setBackground(new java.awt.Color(255, 255, 255));
-        BravoLbl.setFont(new java.awt.Font("Lucida Calligraphy", 2, 22)); // NOI18N
-        BravoLbl.setForeground(new java.awt.Color(51, 255, 0));
-        BravoLbl.setText("Vote Counted!!");
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel9.setText("Leadership");
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Leelawadee UI", 1, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel10.setText("*****Please enter a weight value below*****");
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel16.setText("Discipline");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel13.setText("Communication");
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 255));
+        jLabel17.setText("Responsibility");
+
+        Ldr.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        Ldr.setForeground(new java.awt.Color(0, 102, 255));
+        Ldr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        Dcp.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        Dcp.setForeground(new java.awt.Color(0, 102, 255));
+        Dcp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        Cmc.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        Cmc.setForeground(new java.awt.Color(0, 102, 255));
+        Cmc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        Rsp.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        Rsp.setForeground(new java.awt.Color(0, 102, 255));
+        Rsp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+
+        CdtVisi.setEditable(false);
+        CdtVisi.setColumns(20);
+        CdtVisi.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
+        CdtVisi.setForeground(new java.awt.Color(0, 0, 255));
+        CdtVisi.setRows(5);
+        jScrollPane3.setViewportView(CdtVisi);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -312,21 +365,16 @@ public class Voting extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(CdtPict, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(CdtVisi, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addGap(38, 38, 38)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(VoteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(BravoLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(13, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(VoteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(42, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(165, 165, 165)
+                        .addGap(162, 162, 162)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12)
@@ -340,14 +388,34 @@ public class Voting extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BackBtn)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(470, 470, 470)
-                        .addComponent(jLabel7))
+                            .addComponent(LogoutBtn)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel9)
+                                        .addComponent(Ldr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(153, 153, 153)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel16)
+                                        .addComponent(Dcp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13)
+                                        .addComponent(Cmc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(117, 117, 117)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(Rsp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel17))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-                        .addComponent(CdtName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(CdtName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(469, 469, 469)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(291, 291, 291)
+                        .addComponent(jLabel10)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -366,21 +434,33 @@ public class Voting extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(CdtPict, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                            .addComponent(CdtVisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(VoteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BravoLbl)))
+                        .addGap(48, 48, 48)
+                        .addComponent(VoteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(CdtName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jLabel10)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel17))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Ldr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Dcp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cmc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Rsp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(LogoutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -429,8 +509,6 @@ public class Voting extends javax.swing.JFrame {
         }
     }
     
-    int VotesId;
-    
     private void CdtTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CdtTableMouseClicked
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)CdtTable.getModel();
@@ -442,92 +520,41 @@ public class Voting extends javax.swing.JFrame {
         FetchPhoto();
     }//GEN-LAST:event_CdtTableMouseClicked
 
-    int VoteId;
-    Statement St2 = null;
-    ResultSet Rs2 = null;
-    
-    private void VoteCount() {
-        try {
-            St2 = Con.createStatement();
-            Rs2 = St2.executeQuery("SELECT MAx(No) from tb_vote");
-            Rs2.next();
-            VoteId = Rs2.getInt(1)+1;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
-    
-    int VId;
-    Statement St3 = null;
-    ResultSet Rs3 = null;
-    
-    private void VCount() {
-        try {
-            St3 = Con.createStatement();
-            Rs3 = St3.executeQuery("SELECT MAx(VotesId) from tb_votes");
-            Rs3.next();
-            VId = Rs3.getInt(1)+1;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
-    
-    int VcId;
-    Statement St4 = null;
-    ResultSet Rs4 = null;
-    
-    int VNumber;
-    
-    private void VCheck() {
-        try {
-            St4 = Con.createStatement();
-            Rs4 = St4.executeQuery("SELECT * FROM tb_votes WHERE VoterId = " + votingId);
-            if(Rs4.next()) {
-                VNumber = 1;
-            } else {
-                VNumber = 0;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
-    
+    private void LogoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutBtnMouseClicked
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_LogoutBtnMouseClicked
+
     private void VoteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VoteBtnMouseClicked
         // TODO add your handling code here:
-        VCheck();
         if(CId == 0) {
             JOptionPane.showMessageDialog(this, "Select Your Candidate");
-        } else if(VNumber > 0) {
-            JOptionPane.showMessageDialog(this, "You Cannot Vote Twice!!");
         } else {
             try {
-                VCount();
-                VoteCount();
-                Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
-                PreparedStatement Add = Con.prepareStatement("INSERT INTO tb_votes VALUES(?,?,?,?)");
-                Add.setInt(1, VId);
-                Add.setInt(2, votingId);
-                Add.setInt(3, VoteId);
-                Add.setInt(4, CId);
-                Add.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Vote Counted");
-                Con.close();
-                BravoLbl.setVisible(true);
-                DisplayCandidates();
-                WidthColumn();
-                VoteBtn.setVisible(false);
+                    VCount();
+                    Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
+                    PreparedStatement Add = Con.prepareStatement("INSERT INTO tb_votes VALUES(?,?,?,?,?,?,?)");
+                    Add.setInt(1, VId);
+                    for(int r = 0; r<CdtTable.getRowCount(); r++) {
+                        Add.setString(2, (String)CdtTable.getValueAt(r, 5));
+                        Add.setString(3, (String)CdtTable.getValueAt(r, 1));
+                    }
+                    Add.setString(4, Ldr.getSelectedItem().toString());
+                    Add.setString(5, Dcp.getSelectedItem().toString());
+                    Add.setString(6, Cmc.getSelectedItem().toString());
+                    Add.setString(7, Rsp.getSelectedItem().toString());
+                    Add.executeUpdate();
+                    Con.close();
+                    DisplayCandidates();
+                    WidthColumn();
+                JOptionPane.showMessageDialog(this, "Vote Counted");   
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, "Vote Failed");
             }
         }
     }//GEN-LAST:event_VoteBtnMouseClicked
 
-    private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
-        // TODO add your handling code here:
-        new Login().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BackBtnMouseClicked
-    
     /**
      * @param args the command line arguments
      */
@@ -554,6 +581,7 @@ public class Voting extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Voting.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -564,27 +592,36 @@ public class Voting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BackBtn;
-    private javax.swing.JLabel BravoLbl;
     private javax.swing.JTextArea CdtMisi;
     private javax.swing.JLabel CdtName;
     private javax.swing.JLabel CdtPict;
     private javax.swing.JTable CdtTable;
-    private javax.swing.JLabel CdtVisi;
+    private javax.swing.JTextArea CdtVisi;
+    private javax.swing.JComboBox<String> Cmc;
+    private javax.swing.JComboBox<String> Dcp;
+    private javax.swing.JComboBox<String> Ldr;
+    private javax.swing.JButton LogoutBtn;
+    private javax.swing.JComboBox<String> Rsp;
     private javax.swing.JButton VoteBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

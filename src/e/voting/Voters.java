@@ -267,11 +267,6 @@ public class Voters extends javax.swing.JFrame {
                 AddBtnMouseClicked(evt);
             }
         });
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
-            }
-        });
 
         EditBtn.setBackground(new java.awt.Color(0, 0, 255));
         EditBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
@@ -283,11 +278,6 @@ public class Voters extends javax.swing.JFrame {
                 EditBtnMouseClicked(evt);
             }
         });
-        EditBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtnActionPerformed(evt);
-            }
-        });
 
         DeleteBtn.setBackground(new java.awt.Color(0, 0, 255));
         DeleteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
@@ -297,11 +287,6 @@ public class Voters extends javax.swing.JFrame {
         DeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnMouseClicked(evt);
-            }
-        });
-        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteBtnActionPerformed(evt);
             }
         });
 
@@ -534,18 +519,6 @@ public class Voters extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddBtnActionPerformed
-
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EditBtnActionPerformed
-
-    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteBtnActionPerformed
     
     private void AddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddBtnMouseClicked
         // TODO add your handling code here:
@@ -579,6 +552,13 @@ public class Voters extends javax.swing.JFrame {
                 int row = Add.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Voter Registered");
                 Con.close();
+                VtrName.setText("");
+                VtrAge.setText("");
+                VtrPw.setText("");
+                VtrGen.setSelectedIndex(0);
+                VtrClass.setSelectedIndex(0);
+                VtrMajor.setSelectedIndex(0);
+                VtrVote.setSelectedIndex(0);
                 DisplayVoters();
                 WidthColumn();
             } catch (SQLException ex) {
@@ -600,6 +580,13 @@ public class Voters extends javax.swing.JFrame {
                     Statement Del = Con.createStatement();
                     Del.executeUpdate(Query);
                     JOptionPane.showMessageDialog(this, "Voter Deleted Successfully");
+                    VtrName.setText("");
+                    VtrAge.setText("");
+                    VtrPw.setText("");
+                    VtrGen.setSelectedIndex(0);
+                    VtrClass.setSelectedIndex(0);
+                    VtrMajor.setSelectedIndex(0);
+                    VtrVote.setSelectedIndex(0);
                     DisplayVoters();
                     WidthColumn();
                 } catch (SQLException e) {
@@ -636,6 +623,13 @@ public class Voters extends javax.swing.JFrame {
                     Statement Del = Con.createStatement();
                     Del.executeUpdate(Query);
                     JOptionPane.showMessageDialog(this, "Voters Deleted Successfully");
+                    VtrName.setText("");
+                    VtrAge.setText("");
+                    VtrPw.setText("");
+                    VtrGen.setSelectedIndex(0);
+                    VtrClass.setSelectedIndex(0);
+                    VtrMajor.setSelectedIndex(0);
+                    VtrVote.setSelectedIndex(0);
                     DisplayVoters();
                     WidthColumn();
                 } catch (SQLException e) {
@@ -663,6 +657,13 @@ public class Voters extends javax.swing.JFrame {
                 Update.setString(7, VtrVote.getSelectedItem().toString());
                 Update.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Voter Update Successfully");
+                VtrName.setText("");
+                VtrAge.setText("");
+                VtrPw.setText("");
+                VtrGen.setSelectedIndex(0);
+                VtrClass.setSelectedIndex(0);
+                VtrMajor.setSelectedIndex(0);
+                VtrVote.setSelectedIndex(0);
                 DisplayVoters();  
                 WidthColumn();
             } catch (SQLException e) {

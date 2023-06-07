@@ -47,7 +47,7 @@ public class Candidates extends javax.swing.JFrame {
             String Query = "Select * from tb_vote";
             Rs = St.executeQuery(Query);
             while (Rs.next()) {
-                String VoteID = Rs.getString("ID");
+                String VoteID = Rs.getString("IDVote");
                 CdtVote.addItem(VoteID);
             }
         } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class Candidates extends javax.swing.JFrame {
         try {
             Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
             St = Con.createStatement();
-            Rs = St.executeQuery("SELECT No, ID, Name, Age, Gender, Vote, Vision, Mission, Photo FROM tb_candidates ORDER BY No");
+            Rs = St.executeQuery("SELECT * FROM tb_candidates ORDER BY No");
             CdtTable.setModel(DbUtils.resultSetToTableModel(Rs));
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e);
@@ -279,11 +279,6 @@ public class Candidates extends javax.swing.JFrame {
                 AddBtnMouseClicked(evt);
             }
         });
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
-            }
-        });
 
         EditBtn.setBackground(new java.awt.Color(0, 0, 255));
         EditBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
@@ -295,11 +290,6 @@ public class Candidates extends javax.swing.JFrame {
                 EditBtnMouseClicked(evt);
             }
         });
-        EditBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtnActionPerformed(evt);
-            }
-        });
 
         DeleteBtn.setBackground(new java.awt.Color(0, 0, 255));
         DeleteBtn.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
@@ -309,11 +299,6 @@ public class Candidates extends javax.swing.JFrame {
         DeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DeleteBtnMouseClicked(evt);
-            }
-        });
-        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteBtnActionPerformed(evt);
             }
         });
 
@@ -363,11 +348,6 @@ public class Candidates extends javax.swing.JFrame {
         BrowseBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BrowseBtnMouseClicked(evt);
-            }
-        });
-        BrowseBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BrowseBtnActionPerformed(evt);
             }
         });
 
@@ -530,22 +510,6 @@ public class Candidates extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddBtnActionPerformed
-
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EditBtnActionPerformed
-
-    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteBtnActionPerformed
-
-    private void BrowseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BrowseBtnActionPerformed
     
     String imgpath = null;
     
@@ -599,10 +563,17 @@ public class Candidates extends javax.swing.JFrame {
                 int row = Add.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Candidate Registered");
                 Con.close();
+                CdtID.setText("");
+                CdtName.setText("");
+                CdtAge.setText("");
+                CdtGen.setSelectedIndex(0);
+                CdtVote.setSelectedIndex(0);
+                CdtVisi.setText("");
+                CdtMisi.setText("");
                 DisplayCandidates();
                 WidthColumn();
             } catch (HeadlessException | FileNotFoundException | NumberFormatException | SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, "Candidate Failed");
             }
         }
     }//GEN-LAST:event_AddBtnMouseClicked
@@ -666,6 +637,13 @@ public class Candidates extends javax.swing.JFrame {
                     Statement Del = Con.createStatement();
                     Del.executeUpdate(Query);
                     JOptionPane.showMessageDialog(this, "Candidate Deleted Successfully");
+                    CdtID.setText("");
+                    CdtName.setText("");
+                    CdtAge.setText("");
+                    CdtGen.setSelectedIndex(0);
+                    CdtVote.setSelectedIndex(0);
+                    CdtVisi.setText("");
+                    CdtMisi.setText("");
                     DisplayCandidates();
                     WidthColumn();
                 } catch (SQLException e) {
@@ -694,6 +672,13 @@ public class Candidates extends javax.swing.JFrame {
                     Update.setBlob(8, img);
                     Update.executeUpdate();
                     JOptionPane.showMessageDialog(this, "Candidate Update Successfully");
+                    CdtID.setText("");
+                    CdtName.setText("");
+                    CdtAge.setText("");
+                    CdtGen.setSelectedIndex(0);
+                    CdtVote.setSelectedIndex(0);
+                    CdtVisi.setText("");
+                    CdtMisi.setText("");
                     DisplayCandidates();  
                     WidthColumn();
                 } catch (SQLException e) {

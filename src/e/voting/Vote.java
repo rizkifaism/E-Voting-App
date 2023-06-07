@@ -302,11 +302,6 @@ public class Vote extends javax.swing.JFrame {
 
         VoteName.setFont(new java.awt.Font("Leelawadee UI", 0, 18)); // NOI18N
         VoteName.setForeground(new java.awt.Color(0, 0, 255));
-        VoteName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VoteNameActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -424,6 +419,8 @@ public class Vote extends javax.swing.JFrame {
                 Add.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Added Successfully");
                 Con.close();
+                VoteID.setText("");
+                VoteName.setText("");
                 DisplayVote();
                 WidthColumn();
             } catch (SQLException e) {
@@ -431,10 +428,6 @@ public class Vote extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_AddBtnMouseClicked
-
-    private void VoteNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoteNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_VoteNameActionPerformed
 
     private void VoteTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VoteTableMouseClicked
         // TODO add your handling code here:
@@ -460,10 +453,12 @@ public class Vote extends javax.swing.JFrame {
             if(ok == 0) {
                 try {
                     Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
-                    String Query = "DELETE FROM tb_vote WHERE ID = '" + VoteID.getText() + "'";
+                    String Query = "DELETE FROM tb_vote WHERE IDVote = '" + VoteID.getText() + "'";
                     Statement Del = Con.createStatement();
                     Del.executeUpdate(Query);
                     JOptionPane.showMessageDialog(this, "Data Deleted Successfully");
+                    VoteID.setText("");
+                    VoteName.setText("");
                     DisplayVote();
                     WidthColumn();
                 } catch (SQLException e) {
@@ -482,13 +477,15 @@ public class Vote extends javax.swing.JFrame {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String theDate = dateFormat.format(VoteDate.getDate());
                 Con = DriverManager.getConnection("jdbc:mysql://localhost:3306/evotedb", "root", "");
-                String Query = "UPDATE tb_vote SET ID = ?, Name = ?, Date = ? WHERE ID = '" + VoteID.getText() + "' OR Name = '" + VoteName.getText() + "' OR Date = '" + theDate + "'";
+                String Query = "UPDATE tb_vote SET IDVote = ?, Name = ?, Date = ? WHERE IDVote = '" + VoteID.getText() + "' OR Name = '" + VoteName.getText() + "' OR Date = '" + theDate + "'";
                 PreparedStatement Update = Con.prepareStatement(Query);
                 Update.setString(1, VoteID.getText());
                 Update.setString(2, VoteName.getText());
                 Update.setString(3, theDate);
                 Update.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Data Update Successfully");
+                VoteID.setText("");
+                VoteName.setText("");
                 DisplayVote();
                 WidthColumn();
             } catch (SQLException e) {

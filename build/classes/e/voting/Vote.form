@@ -491,9 +491,6 @@
               <Color blue="ff" green="0" red="0" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VoteNameActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
